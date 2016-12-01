@@ -10,6 +10,10 @@ defmodule ElixirBubblesortTest do
   end
 
   test "sorts a two-nodes list" do
-    assert ElixirBubblesort.sort([1,2]) === [2,1]
+    assert ElixirBubblesort.sort([2,1]) === [1,2]
+  end
+
+  test "sorts a longer list with just one swap" do
+    assert ElixirBubblesort.sort([1,2,4,3]) === [1,2,3,4]
   end
 end
