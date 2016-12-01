@@ -1,13 +1,33 @@
 defmodule ElixirBubblesort do
 
-  def sort([ a | [b | tail]]) when a > b  do
-    [b, a] ++ sort(tail)
+  def sort([]), do: []
+
+  def sort(list) do
+    do_sort(list)
   end
 
-  def sort([ a | [b | tail]]) when a < b  do
-    [a, b] ++ sort(tail)
+  defp do_sort([a | [b | tail]]) when a > b do
+    do_sort([b], [a] ++ tail, :repeat_required)
   end
 
-  def sort(list), do: list
+  defp do_sort([a | [b | tail]]) when a <= b do
+    do_sort([a], [b] ++ tail, :done)
+  end
+
+  defp do_sort(partial_list, [a | [b | tail]], repeat_status) when a > b do
+    do_sort(partial_list ++ [b], [a] ++ tail, :repeat_required) 
+  end
+
+  defp do_sort(partial_list, [a | [b | tail]], repeat_status) when a <= b do
+    do_sort(partial_list ++ [a], [b] ++ tail, repeat_status) 
+  end
+
+  defp do_sort(almost_full, last_node, :repeat_required) do
+    sort(almost_full ++ last_node)
+  end
+
+  defp do_sort(almost_full, last_node, :done) do
+    almost_full ++ last_node
+  end
 
 end
